@@ -12,18 +12,35 @@
 ### Verdaccio - local registry
 
 - Run `verdaccio` in Docker - it will expose a local registry at `http://localhost:4873`
+  - clone current repository
   - start at the root of this project
   - `cd verdaccio`
   - `docker compose up -d` (or `docker-compose up -d` for older versions)
-- Set up local registry
+
+  <img src="./docs/images/docker.png" />
+
+- Set up local registry (still in `verdacio` folder)
   - check whether local registry is accessible [http://localhost:4873]()
-  - create registry user - `npm adduser --registry http://localhost:4873` and follow interactive commands
+
+  <img src="./docs/images/local_registry.png">
+
+  - create registry user - `npm adduser --registry http://localhost:4873` and follow interactive commands 
+  
+  You can use any credentials, eg.:
+
+  ```ts
+  login: admin
+  password: admin123
+  email: admin@admin.com
+  ```
+  <img src="./docs/images/npm registry.png" />
+  
   - (optional) if the user already exists, you can login - `npm login --registry http://localhost:4873`
 
 ### Spartacus source core
 
 - Set up Spartacus source code
-  - start at the root of this project
+  - start at the root of this project (`spartacus-sandbox` folder)
   - `git clone https://github.com/SAP/spartacus.git spartacus-source`
   - `cd spartacus-source`
   - `git checkout release-2211.32.1`
@@ -31,6 +48,8 @@
   - `npm run start`
   - visit `http://localhost:4200` to check if Spartacus core works correctly
   - after confirming that Spartacus core works, you can close the terminal
+
+<img src="./docs/images/spartacus_source_code.png" />
 
 ### Publishing to local registry
 
@@ -43,7 +62,7 @@
 ### Install Spartacus as dependency for Angular application
 
 - Prepare Angular application
-  - start at the root of this project
+  - start at the root of this project (inside `spartacus-sandbox` folder)
   - (optional) `npm i -g @angular/cli@17.3.11`
   - `ng new spartacus-app --style=scss --routing=false --standalone=false`
   - select `no` for SSR
@@ -51,12 +70,15 @@
 - Configure local registry
   - create `.npmrc` file (in `spartacus-app` directory)
   - add configuration - `@spartacus:registry=http://localhost:4873`
-- Install Spartacus
+  - you can do it by running following command in the terminal: `echo "@spartacus:registry=http://localhost:4873" > .npmrc`
+- Install Spartacus (inside `spartacus-app` folder)
   - `ng add @spartacus/schematics`
   - press `enter` when asked for libraries to install
   - `npm i`
   - change `baseUrl` in `spartacus-app/src/app/spartacus/spartacus-configuration.module.ts` to `https://composable-storefront-demo.eastus.cloudapp.azure.com:8443` (Spartacus demo instance)
   - `npm start`
+ 
+ <img src="./docs/images/running app.png" />
  
 ## Known issues
 
